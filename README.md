@@ -16,8 +16,8 @@ Behavior Differences
 - ``get_absolute_url()`` replaces username with the user email address and swaps @ with _
 
 
-Quick start
------------
+Setup
+-----
 
 1. Use pip or otherwise clone the repository into your environment. PyPi package coming shortly. 
 
@@ -52,6 +52,9 @@ or use South and migrate an existing database
     python manage.py migrate thingsandstuff
 
 
+Migrations coming eventually.
+
+
 Usage
 -----
 
@@ -71,5 +74,8 @@ Usage details are provided in the [Django documentation](https://docs.djangoproj
     class Article(models.Model):
         author = models.ForeignKey(settings.AUTH_USER_MODEL)
 
+
+Additionally
+------------
 
 ``EmailUser`` can be extending by inheriting from ``AbstractEmailUser``.
