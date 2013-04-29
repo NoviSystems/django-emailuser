@@ -55,9 +55,7 @@ or use South and migrate an existing database
 Usage
 -----
 
-Usage details are provided in the `Django documentation`_. In summary, there are two rules:
-
-.. _Django documentation: https://docs.djangoproject.com/en/1.5/topics/auth/customizing/#referencing-the-user-model
+Usage details are provided in the [Django documentation](https://docs.djangoproject.com/en/1.5/topics/auth/customizing/#referencing-the-user-model). In summary, there are two rules:
 
 
 1. Do not reference the ``User`` class directly. Instead, use ``django.contrib.auth.get_user_model()`` to get the currently active user model. 
