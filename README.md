@@ -26,7 +26,7 @@ Setup
 
 .. code-block:: python
 
-    AUTH_USER_MODEL = 'emailuser.EmailUser'
+    AUTH_USER_MODEL = 'auth.EmailUser'
 
 
 3. Add ``'emailuser',`` under the ``INSTALLED_APPS`` setting:

@@ -59,8 +59,6 @@ class AbstractEmailUser(AbstractBaseUser, PermissionsMixin):
     REQUIRED_FIELDS = []
 
     class Meta:
-        verbose_name = _('user')
-        verbose_name_plural = _('users')
         abstract = True
 
     def get_absolute_url(self):
@@ -92,6 +90,9 @@ class EmailUser(AbstractEmailUser):
     """
     class Meta:
         app_label = 'auth'
+        verbose_name = _('user')
+        verbose_name_plural = _('users')
+
 
 
 class EmailUserExt(AbstractEmailUser):
@@ -100,6 +101,8 @@ class EmailUserExt(AbstractEmailUser):
     """
     class Meta:
         app_label = 'auth'
+        verbose_name = _('user')
+        verbose_name_plural = _('users')
 
     @property
     def is_a(self, cls):
