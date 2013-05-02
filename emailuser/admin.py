@@ -1,9 +1,10 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
+from django.contrib.auth import get_user_model
 from django.utils.translation import ugettext_lazy as _
 
 from forms import EmailUserCreationForm, EmailUserChangeForm
-from models import EmailUser
+from models import EmailUser, EmailUserExt
 
 
 class EmailUserAdmin(UserAdmin):
@@ -28,4 +29,10 @@ class EmailUserAdmin(UserAdmin):
     ordering = ('email',)
 
 
-admin.site.register(EmailUser, EmailUserAdmin)
+
+
+
+# Don't register admin unless user model is EmailUserAdmin
+user_model = get_user_model()
+if user_model == EmailUser or user_model == EmailUserExt:
+    admin.site.register(user_model, EmailUserAdmin)
