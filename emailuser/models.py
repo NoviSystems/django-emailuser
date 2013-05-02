@@ -94,7 +94,6 @@ class EmailUser(AbstractEmailUser):
         verbose_name_plural = _('users')
 
 
-
 class EmailUserExt(AbstractEmailUser):
     """Example extension class. Provides helper methods for getting FK'd
     profile classes.

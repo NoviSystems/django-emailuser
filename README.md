@@ -24,14 +24,10 @@ Setup
 
 2. Set ``AUTH_USER_MODEL`` to ``EmailUser``:
 
-.. code-block:: python
-
     AUTH_USER_MODEL = 'auth.EmailUser'
 
 
 3. Add ``'emailuser',`` under the ``INSTALLED_APPS`` setting:
-
-.. code-block:: python
 
     INSTALLED_APPS = (
         ...
@@ -41,13 +37,10 @@ Setup
 
 4. Sync your database.
 
-.. code-block:: python
-
     python manage.py syncdb
 
 or use South and migrate an existing database
 
-.. code-block:: python
 
     python manage.py migrate thingsandstuff
 
@@ -66,8 +59,6 @@ Usage details are provided in the [Django documentation](https://docs.djangoproj
 
 2. When defining a relation to the User model, you should specify the custom model using the AUTH_USER_MODEL setting.
 
-.. code-block:: python
-
     from django.conf import settings
     from django.db import models
 
@@ -78,4 +69,4 @@ Usage details are provided in the [Django documentation](https://docs.djangoproj
 Additionally
 ------------
 
-``EmailUser`` can be extending by inheriting from ``AbstractEmailUser``.
+``EmailUser`` can be extending by inheriting from ``AbstractEmailUser``. ``EmailUserAdmin`` will also need to be extended.
