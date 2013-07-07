@@ -16,9 +16,11 @@ class EmailUserCreationForm(forms.ModelForm):
         'duplicate_email': _("A user with that email address already exists."),
         'password_mismatch': _("The two password fields didn't match."),
     }
-    password1 = forms.CharField(label=_("Password"),
+    password1 = forms.CharField(
+        label=_("Password"),
         widget=forms.PasswordInput)
-    password2 = forms.CharField(label=_("Password confirmation"),
+    password2 = forms.CharField(
+        label=_("Password confirmation"),
         widget=forms.PasswordInput,
         help_text=_("Enter the same password as above, for verification."))
 
@@ -53,7 +55,8 @@ class EmailUserCreationForm(forms.ModelForm):
 
 
 class EmailUserChangeForm(forms.ModelForm):
-    password = ReadOnlyPasswordHashField(label=_("Password"),
+    password = ReadOnlyPasswordHashField(
+        label=_("Password"),
         help_text=_("Raw passwords are not stored, so there is no way to see "
                     "this user's password, but you can change the password "
                     "using <a href=\"password/\">this form</a>."))
