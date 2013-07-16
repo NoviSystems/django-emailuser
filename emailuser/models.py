@@ -1,4 +1,3 @@
-
 from django.core.mail import send_mail
 from django.db import models
 from django.utils.http import urlquote
@@ -42,7 +41,7 @@ class AbstractEmailUser(AbstractBaseUser, PermissionsMixin):
 
     Password and email are required. Other fields are optional.
     """
-    email = models.EmailField(_('email address'), max_length=255, unique=True, db_index=True)
+    email = models.EmailField(_('email address'), max_length=254, unique=True, db_index=True)
     is_staff = models.BooleanField(
         _('staff status'),
         default=False,
