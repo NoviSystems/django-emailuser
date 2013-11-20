@@ -79,14 +79,18 @@ class AbstractEmailUser(AbstractBaseUser, PermissionsMixin):
         send_mail(subject, message, from_email, [self.email])
 
 
-class EmailUser(AbstractEmailUser):
-    """
-    Users within the Django authentication system are represented by this
-    model.
+# Django 1.6 bug - https://code.djangoproject.com/ticket/21419
+# Two concrete sub classes of the same abstract base user model will conflict and cause
+# validation to fail if their abc inherits from PermissionsMixin. Lame.
 
-    Username, password and email are required. Other fields are optional.
-    """
-    class Meta:
-        app_label = 'auth'
-        verbose_name = _('user')
-        verbose_name_plural = _('users')
+# class EmailUser(AbstractEmailUser):
+#     """
+#     Users within the Django authentication system are represented by this
+#     model.
+#
+#     Username, password and email are required. Other fields are optional.
+#     """
+#     class Meta:
+#         app_label = 'auth'
+#         verbose_name = _('user')
+#         verbose_name_plural = _('users')
