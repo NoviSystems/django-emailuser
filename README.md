@@ -1,11 +1,8 @@
-Pay no attention to the unfinished project
-==========================================
-
 
 django-emailuser
 ================
 
-Email-based users for Django 1.5. Mimics Django's default User class, but without usernames. 
+Email-based users for Django 1.5+. Mimics Django's default User class, but without usernames. 
 
 
 Behavior Differences
@@ -39,14 +36,6 @@ Setup
 
     python manage.py syncdb
 
-or use South and migrate an existing database
-
-
-    python manage.py migrate thingsandstuff
-
-
-Migrations coming eventually.
-
 
 Usage
 -----
@@ -70,3 +59,9 @@ Additionally
 ------------
 
 ``EmailUser`` can be extending by inheriting from ``AbstractEmailUser``. ``EmailUserAdmin`` will also need to be extended.
+
+
+License & Copyright
+-------------------
+
+django-emailuser is released under the BSD 3-Clause license. Copyright 2013 North Carolina State University.
