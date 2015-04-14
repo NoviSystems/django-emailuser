@@ -6,6 +6,8 @@ from django.utils import timezone
 
 from django.contrib.auth.models import BaseUserManager, AbstractBaseUser, PermissionsMixin
 
+from emailuser import fields
+
 
 class EmailUserManager(BaseUserManager):
     def create_user(self, email, password=None, **extra_fields):
@@ -41,7 +43,7 @@ class AbstractEmailUser(AbstractBaseUser, PermissionsMixin):
 
     Password and email are required. Other fields are optional.
     """
-    email = models.EmailField(_('email address'), max_length=254, unique=True, db_index=True)
+    email = fields.EmailField(_('email address'), max_length=254, unique=True)
     is_staff = models.BooleanField(
         _('staff status'),
         default=False,
