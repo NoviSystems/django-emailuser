@@ -64,7 +64,7 @@ Additionally
 
 `EmailUser` can be extended by inheriting from `AbstractEmailUser`. `EmailUserAdmin` will also need to be extended.
 
-It is the de facto standard that emails are case insensitive. This package does so when possible. Currently the only supported database is PostgreSQL.
+It is the de facto standard that emails are case insensitive. This package does so when possible. Currently the only supported databases are PostgreSQL and sqlite.
 
 
 License & Copyright
