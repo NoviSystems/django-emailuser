@@ -6,7 +6,7 @@ class EmailField(fields.EmailField):
 
     def __init__(self, *args, **kwargs):
         self.case_insensitive = kwargs.pop('case_insensitive', True)
-        return super(EmailField, self).__init__(*args, **kwargs)
+        super(EmailField, self).__init__(*args, **kwargs)
 
     def db_type(self, connection):
         if self.case_insensitive:

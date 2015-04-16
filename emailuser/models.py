@@ -1,6 +1,6 @@
+
 from django.core.mail import send_mail
 from django.db import models
-from django.utils.http import urlquote
 from django.utils.translation import ugettext_lazy as _
 from django.utils import timezone
 from django import get_version
@@ -11,30 +11,30 @@ from emailuser import fields
 
 
 class EmailUserManager(BaseUserManager):
-    def create_user(self, email, password=None, **extra_fields):
-        """Creates and saves an EmailUser with the given email and password.
-        """
+    use_in_migrations = True
+
+    def _create_user(self, email, password, is_staff, is_superuser, **kwargs):
         now = timezone.now()
         if not email:
             raise ValueError('The given email must be set')
-        email = EmailUserManager.normalize_email(email)
-        user = self.model(email=email,
-                          is_staff=False, is_active=True, is_superuser=False,
-                          last_login=now, date_joined=now, **extra_fields)
-
+        email = self.normalize_email(email)
+        user = self.model(email=email, is_staff=is_staff, is_active=True,
+                          is_superuser=is_superuser, date_joined=now, **kwargs)
         user.set_password(password)
         user.save(using=self._db)
         return user
 
-    def create_superuser(self, email, password, **extra_fields):
-        """Creates and saves a superuser with the given email and password.
+    def create_user(self, email, password=None, **extra_fields):
         """
-        user = self.create_user(email, password, **extra_fields)
-        user.is_staff = True
-        user.is_active = True
-        user.is_superuser = True
-        user.save(using=self._db)
-        return user
+        Creates and saves an EmailUser with the given email and password.
+        """
+        return self._create_user(email, password, False, False, **extra_fields)
+
+    def create_superuser(self, email, password, **extra_fields):
+        """
+        Creates and saves a superuser with the given email and password.
+        """
+        return self._create_user(email, password, True, True, **extra_fields)
 
 
 class AbstractEmailUser(AbstractBaseUser, PermissionsMixin):
@@ -63,11 +63,9 @@ class AbstractEmailUser(AbstractBaseUser, PermissionsMixin):
     REQUIRED_FIELDS = []
 
     class Meta:
+        verbose_name = _('user')
+        verbose_name_plural = _('users')
         abstract = True
-
-    def get_absolute_url(self):
-        email = self.email.split("@")
-        return "/users/%s/%s" % (urlquote(email[1]), urlquote(email[0]),)
 
     def get_full_name(self):
         """Returns the full email address."""
@@ -77,9 +75,9 @@ class AbstractEmailUser(AbstractBaseUser, PermissionsMixin):
         """Returns the local part of the email address."""
         return self.email.split('@')[0]
 
-    def email_user(self, subject, message, from_email=None):
+    def email_user(self, subject, message, from_email=None, **kwargs):
         """Sends an email to this User."""
-        send_mail(subject, message, from_email, [self.email])
+        send_mail(subject, message, from_email, [self.email], **kwargs)
 
 
 def min_version(actual, minimum):
@@ -104,6 +102,5 @@ if min_version(get_version(), '1.7'):
         Username, password and email are required. Other fields are optional.
         """
         class Meta:
-            app_label = 'auth'
             verbose_name = _('user')
             verbose_name_plural = _('users')
