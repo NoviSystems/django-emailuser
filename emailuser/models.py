@@ -1,9 +1,8 @@
 
-from django.core.mail import send_mail
 from django.db import models
+from django.core.mail import send_mail
 from django.utils.translation import ugettext_lazy as _
 from django.utils import timezone
-from django import get_version
 
 from django.contrib.auth.models import BaseUserManager, AbstractBaseUser, PermissionsMixin
 
@@ -63,9 +62,9 @@ class AbstractEmailUser(AbstractBaseUser, PermissionsMixin):
     REQUIRED_FIELDS = []
 
     class Meta:
+        abstract = True
         verbose_name = _('user')
         verbose_name_plural = _('users')
-        abstract = True
 
     def get_full_name(self):
         """Returns the full email address."""
@@ -80,27 +79,14 @@ class AbstractEmailUser(AbstractBaseUser, PermissionsMixin):
         send_mail(subject, message, from_email, [self.email], **kwargs)
 
 
-def min_version(actual, minimum):
-    try:
-        from distutils.version import NormalizedVersion as Version
-    except:
-        from distutils.version import LooseVersion as Version
+class EmailUser(AbstractEmailUser):
+    """
+    Users within the Django authentication system are represented by this
+    model.
 
-    return Version(actual) > Version(minimum)
-
-
-# Django 1.6 bug - https://code.djangoproject.com/ticket/21419
-# Two concrete sub classes of the same abstract base user model will conflict and cause
-# validation to fail if their abc inherits from PermissionsMixin.
-if min_version(get_version(), '1.7'):
-
-    class EmailUser(AbstractEmailUser):
-        """
-        Users within the Django authentication system are represented by this
-        model.
-
-        Username, password and email are required. Other fields are optional.
-        """
-        class Meta:
-            verbose_name = _('user')
-            verbose_name_plural = _('users')
+    Username, password and email are required. Other fields are optional.
+    """
+    class Meta:
+        swappable = 'AUTH_USER_MODEL'
+        verbose_name = _('user')
+        verbose_name_plural = _('users')
