@@ -4,6 +4,11 @@ from django import forms
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import ReadOnlyPasswordHashField
+try:
+    from django.contrib.auth.password_validation import validate_password
+except ImportError:
+    def validate_password(value):
+        pass
 
 UserModel = get_user_model()
 
@@ -28,6 +33,12 @@ class EmailUserCreationForm(forms.ModelForm):
         model = UserModel
         fields = ("email",)
 
+    def clean_password1(self):
+        password1 = self.cleaned_data.get("password1")
+        validate_password(password1)
+
+        return password1
+
     def clean_password2(self):
         password1 = self.cleaned_data.get("password1")
         password2 = self.cleaned_data.get("password2")
@@ -36,6 +47,7 @@ class EmailUserCreationForm(forms.ModelForm):
                 self.error_messages['password_mismatch'],
                 code='password_mismatch',
             )
+
         return password2
 
     def save(self, commit=True):
