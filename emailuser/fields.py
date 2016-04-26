@@ -12,6 +12,8 @@ class EmailField(fields.EmailField):
         if self.case_insensitive:
             if connection.settings_dict['ENGINE'] == 'django.db.backends.postgresql_psycopg2':
                 return 'citext'
+            if connection.settings_dict['ENGINE'] == 'django.db.backends.postgresql':
+                return 'citext'
             if connection.settings_dict['ENGINE'] == 'django.db.backends.sqlite3':
                 return 'text collate nocase'
 
